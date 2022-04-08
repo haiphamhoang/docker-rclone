@@ -1,6 +1,12 @@
 name: Docker Image CI
 on:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      rclone_version:
+        description: 'A version of rclone image you want to build.'
+        required: true
+        type: string
   
 jobs:
   build_image:
@@ -8,4 +14,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag rclonecron:$(date +%s) --tag rclonecron:latest
+      run: docker build --no-cache --build-arg RCLONE_VERSION=${{ inputs.rclone_version }} -t rclonecron:${{ inputs.rclone_version }} -t rclonecron:latest  .
