@@ -5,6 +5,7 @@ on:
     inputs:
       rclone_version:
         description: 'A version of rclone image you want to build.'
+        default: 'v1.57.0'
         required: true
         type: string
   
