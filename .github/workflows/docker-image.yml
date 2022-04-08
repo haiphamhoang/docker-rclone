@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       rclone_version:
-        description: 'version of rclone image you want to build.'
+        description: 'Version of rclone image you want to build. Example: v1.58.0'
         required: true
         type: string
   
