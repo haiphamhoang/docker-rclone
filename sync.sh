@@ -13,7 +13,7 @@ else
   if [ ! -z "$CHECK_URL" ]
   then
     echo "INFO: Sending start signal to healthchecks.io"
-    wget $CHECK_URL/start -O /dev/null
+    wget -q "$CHECK_URL/start" -O /dev/null
   fi
 
   # Delete logs by user request
@@ -96,20 +96,20 @@ else
       then
         echo "INFO: Sending complete signal with logs to healthchecks.io"
         m=$(tail -c 10000 "$LOG_FILE")
-	wget $CHECK_URL -O /dev/null --post-data="$m"
+	wget -q "$CHECK_URL" -O /dev/null --post-data="$m"
       else
 	echo "INFO: Sending complete signal to healthchecks.io"
-        wget $CHECK_URL -O /dev/null --post-data="SUCCESS"
+        wget -q "$CHECK_URL" -O /dev/null --post-data="SUCCESS"
       fi
     else
       if [ ! -z "$OUTPUT_LOG" ] && [ ! -z "$HC_LOG" ] && [ -f "$LOG_FILE" ]
       then
         echo "INFO: Sending failure signal with logs to healthchecks.io"
         m=$(tail -c 10000 "$LOG_FILE")
-        wget $FAIL_URL -O /dev/null --post-data="$m"
+        wget -q "$FAIL_URL" -O /dev/null --post-data="$m"
       else
 	echo "INFO: Sending failure signal to healthchecks.io"
-        wget $FAIL_URL -O /dev/null --post-data="Check container logs"
+        wget -q "$FAIL_URL" -O /dev/null --post-data="Check container logs"
       fi
     fi
   fi
